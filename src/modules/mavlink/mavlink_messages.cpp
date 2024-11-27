@@ -56,6 +56,8 @@
 #include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/vehicle_status.h>
 
+#include "streams/TARGET_LOCKING_STATUS.hpp"	// include custom stream
+
 #include "streams/ACTUATOR_OUTPUT_STATUS.hpp"
 #include "streams/ALTITUDE.hpp"
 #include "streams/ATTITUDE.hpp"
@@ -248,6 +250,9 @@ static_assert(MAV_SENSOR_ROTATION_CUSTOM == static_cast<MAV_SENSOR_ORIENTATION>(
 
 
 static const StreamListItem streams_list[] = {
+#if defined(TARGET_LOCKING_STATUS_HPP)	// add custom stream to stream list
+	create_stream_list_item<MavlinkStreamTargetLockingStatus>(),
+#endif // TARGET_LOCKING_STATUS_HPP
 #if defined(HEARTBEAT_HPP)
 	create_stream_list_item<MavlinkStreamHeartbeat>(),
 #endif // HEARTBEAT_HPP
