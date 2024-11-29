@@ -76,6 +76,9 @@ publications:
 
 # Create uORB::Publication
 subscriptions:
+  - topic: /fmu/in/telemetry ## custom  !!!!!!!!!!!!!!!!!!
+    type: px4_msgs::msg::Telemetry
+
   - topic: /fmu/in/register_ext_component_request
     type: px4_msgs::msg::RegisterExtComponentRequest
 

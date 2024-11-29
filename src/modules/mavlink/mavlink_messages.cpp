@@ -56,7 +56,8 @@
 #include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/vehicle_status.h>
 
-#include "streams/TARGET_LOCKING_STATUS.hpp"	// include custom stream
+#include "streams/TARGET_LOCKING_STATUS.hpp"	// include custom streams
+#include "streams/TELEMETRY.hpp"
 
 #include "streams/ACTUATOR_OUTPUT_STATUS.hpp"
 #include "streams/ALTITUDE.hpp"
@@ -253,6 +254,10 @@ static const StreamListItem streams_list[] = {
 #if defined(TARGET_LOCKING_STATUS_HPP)	// add custom stream to stream list
 	create_stream_list_item<MavlinkStreamTargetLockingStatus>(),
 #endif // TARGET_LOCKING_STATUS_HPP
+#if defined(TELEMETRY_HPP)
+    create_stream_list_item<MavlinkStreamTelemetry>(),
+#endif // TELEMETRY_HPP
+
 #if defined(HEARTBEAT_HPP)
 	create_stream_list_item<MavlinkStreamHeartbeat>(),
 #endif // HEARTBEAT_HPP
