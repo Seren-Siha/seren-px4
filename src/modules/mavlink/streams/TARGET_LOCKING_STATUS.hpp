@@ -63,17 +63,12 @@ protected:
 
 			// Define the MAVLink message object to send
 			mavlink_target_locking_status_t lock_status_msg{};
-			mavlink_named_value_int_t named_value_int_msg{};
 
 			// Fill the MAVLink message with data
 			lock_status_msg.is_locked = target_locking_status.is_locked ? 1 : 0; // 1 if locked, 0 if not locked
-			named_value_int_msg.value = lock_status_msg.is_locked;
-			strcpy(named_value_int_msg.name, "is_locked");
-			named_value_int_msg.time_boot_ms = target_locking_status.timestamp;
 
 			// Send the message
 			mavlink_msg_target_locking_status_send_struct(_mavlink->get_channel(), &lock_status_msg);
-			//mavlink_msg_named_value_int_send_struct(_mavlink->get_channel(), &named_value_int_msg);
 
 			updated = true;
 		}

@@ -1413,7 +1413,7 @@ Mavlink::configure_streams_to_default(const char *configure_single_stream)
 	switch (_mode) {
 	case MAVLINK_MODE_NORMAL:
 		configure_stream_local("TARGET_LOCKING_STATUS", 2.0f); //add seren stream here
-		configure_stream_local("TELEMETRY", 5.0f);
+		configure_stream_local("SEREN_ALTITUDE", 1.0f);
 
 		configure_stream_local("ADSB_VEHICLE", unlimited_rate);
 		configure_stream_local("ALTITUDE", 1.0f);
