@@ -1,3 +1,12 @@
+# Seren Spesific:
+Clone recursively to get submodules like `mavlink-seren`: `git clone --recursive https://github.com/Seren-Siha/seren-px4.git`
+When changing message definitions don't forget to change it in `https://github.com/Seren-Siha/custom-message-c-library` too for qgc
+
+
+
+
+
+
 # PX4 Drone Autopilot
 
 [![Releases](https://img.shields.io/github/release/PX4/PX4-Autopilot.svg)](https://github.com/PX4/PX4-Autopilot/releases) [![DOI](https://zenodo.org/badge/22634/PX4/PX4-Autopilot.svg)](https://zenodo.org/badge/latestdoi/22634/PX4/PX4-Autopilot)
