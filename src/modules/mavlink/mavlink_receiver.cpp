@@ -62,6 +62,7 @@
 #include "mavlink_receiver.h"
 
 #include <lib/drivers/device/Device.hpp> // For DeviceId union
+#include <iostream>
 
 #ifdef CONFIG_NET
 #define MAVLINK_RECEIVER_NET_ADDED_STACK 1360
@@ -136,6 +137,10 @@ void
 MavlinkReceiver::handle_message(mavlink_message_t *msg)
 {
 	switch (msg->msgid) {
+	case MAVLINK_MSG_ID_TARGET_LOCKING_STATUS:
+		handle_message_target_locking_status(msg);
+		break;
+
 	case MAVLINK_MSG_ID_COMMAND_LONG:
 		handle_message_command_long(msg);
 		break;
@@ -414,6 +419,24 @@ MavlinkReceiver::handle_message(mavlink_message_t *msg)
 	_mavlink.handle_message(msg);
 }
 
+void
+MavlinkReceiver::handle_message_target_locking_status(mavlink_message_t *msg)
+{
+	/* if ((msg->sysid != mavlink_system.sysid) || (msg->compid == mavlink_system.compid)) {
+		// ignore msg coming from other systems or from the autopilot itself
+		return;
+	} */	// not working as intended for some reason ???
+
+	mavlink_target_locking_status_t locking_status;
+	mavlink_msg_target_locking_status_decode(msg, &locking_status);
+
+	target_locking_status_s target_locking_status{};
+	target_locking_status.timestamp = hrt_absolute_time();
+	target_locking_status.is_locked = locking_status.is_locked;
+
+	PX4_INFO("Target locking status: %s", target_locking_status.is_locked ? "locked" : "unlocked");
+
+}
 void MavlinkReceiver::handle_messages_in_gimbal_mode(mavlink_message_t &msg)
 {
 	switch (msg.msgid) {

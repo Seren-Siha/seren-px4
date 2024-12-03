@@ -113,6 +113,7 @@
 #include <uORB/topics/vehicle_trajectory_bezier.h>
 #include <uORB/topics/vehicle_trajectory_waypoint.h>
 #include <uORB/topics/velocity_limits.h>
+#include <uORB/topics/target_locking_status.h>
 
 #if !defined(CONSTRAINED_FLASH)
 # include <uORB/topics/debug_array.h>
@@ -159,6 +160,7 @@ private:
 	void handle_message(mavlink_message_t *msg);
 	void handle_messages_in_gimbal_mode(mavlink_message_t &msg);
 
+	void handle_message_target_locking_status(mavlink_message_t *msg);
 	void handle_message_adsb_vehicle(mavlink_message_t *msg);
 	void handle_message_att_pos_mocap(mavlink_message_t *msg);
 	void handle_message_battery_status(mavlink_message_t *msg);
