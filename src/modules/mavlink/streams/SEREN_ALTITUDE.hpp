@@ -3,7 +3,7 @@
 #define SEREN_ALTITUDE_HPP
 
 #include <uORB/topics/telemetry.h>
-#include <iostream>
+//#include <iostream>
 
 class MavlinkStreamSerenAltitude : public MavlinkStream
 {
@@ -59,7 +59,7 @@ protected:
 
 		// Update battery_status and publish only if the status has changed
 		if (_telemetry_sub.update(&telem)) {
-			std::cout << "Telemetry: " << telem.altitude << std::endl;
+//			std::cout << "Telemetry: " << telem.altitude << std::endl;
 			// mavlink_battery_status_demo_t is the MAVLink message object
 			mavlink_seren_altitude_t telem_msg{};
 

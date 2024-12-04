@@ -62,7 +62,7 @@
 #include "mavlink_receiver.h"
 
 #include <lib/drivers/device/Device.hpp> // For DeviceId union
-#include <iostream>
+//#include <iostream>
 
 #ifdef CONFIG_NET
 #define MAVLINK_RECEIVER_NET_ADDED_STACK 1360
@@ -434,9 +434,23 @@ MavlinkReceiver::handle_message_target_locking_status(mavlink_message_t *msg)
 	target_locking_status.timestamp = hrt_absolute_time();
 	target_locking_status.is_locked = locking_status.is_locked;
 
-	PX4_INFO("Target locking status: %s", target_locking_status.is_locked ? "locked" : "unlocked");
+	//PX4_INFO("Target locking status: %s", target_locking_status.is_locked ? "locked" : "unlocked");
 
+	_target_locking_status_pub.publish(target_locking_status);
 }
+/*void
+MavlinkReceiver::handle_message_seren_altitude(mavlink_message_t *msg)
+{
+	mavlink_seren_altitude_t seren_altitude;
+	mavlink_msg_seren_altitude_decode(msg, &seren_altitude);
+
+	telemetry_s telemetry{};
+	telemetry.timestamp = hrt_absolute_time();
+	telemetry.altitude = (float)seren_altitude.altitude;
+
+	_telemetry_pub.publish(telemetry);
+}
+*/
 void MavlinkReceiver::handle_messages_in_gimbal_mode(mavlink_message_t &msg)
 {
 	switch (msg.msgid) {
