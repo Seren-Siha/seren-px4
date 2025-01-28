@@ -141,6 +141,18 @@ MavlinkReceiver::handle_message(mavlink_message_t *msg)
 		handle_message_target_locking_status(msg);
 		break;
 
+	case MAVLINK_MSG_ID_SEREN_TARGET_TELEMETRY:
+		handle_message_seren_target_telemetry(msg);
+		break;
+
+	case MAVLINK_MSG_ID_SEREN_HSS_COORDINATES:
+		handle_message_seren_hss_coordinates(msg);
+		break;
+
+	case MAVLINK_MSG_ID_SEREN_FLIGHT_MODE_CHANGE:
+		handle_message_seren_flight_mode_change(msg);
+		break;
+
 	case MAVLINK_MSG_ID_COMMAND_LONG:
 		handle_message_command_long(msg);
 		break;
@@ -438,19 +450,55 @@ MavlinkReceiver::handle_message_target_locking_status(mavlink_message_t *msg)
 
 	_target_locking_status_pub.publish(target_locking_status);
 }
-/*void
-MavlinkReceiver::handle_message_seren_altitude(mavlink_message_t *msg)
+
+
+void MavlinkReceiver::handle_message_seren_target_telemetry(mavlink_message_t *msg)
 {
-	mavlink_seren_altitude_t seren_altitude;
-	mavlink_msg_seren_altitude_decode(msg, &seren_altitude);
+	mavlink_seren_target_telemetry_t seren_target_telemetry;
+	mavlink_msg_seren_target_telemetry_decode(msg, &seren_target_telemetry);
 
-	telemetry_s telemetry{};
-	telemetry.timestamp = hrt_absolute_time();
-	telemetry.altitude = (float)seren_altitude.altitude;
+	seren_target_telemetry_s target_telemetry{};
+	target_telemetry.timestamp = hrt_absolute_time();
+	target_telemetry.latitude = (float)seren_target_telemetry.latitude;
+	target_telemetry.longitude = (float)seren_target_telemetry.longitude;
+	target_telemetry.altitude = (float)seren_target_telemetry.altitude;
+	target_telemetry.pitch = (float)seren_target_telemetry.pitch;
+	target_telemetry.yaw = (float)seren_target_telemetry.yaw;
+	target_telemetry.roll = (float)seren_target_telemetry.roll;
+	target_telemetry.speed = (float)seren_target_telemetry.speed;
 
-	_telemetry_pub.publish(telemetry);
+	_seren_target_telemetry_pub.publish(target_telemetry);
 }
-*/
+
+void MavlinkReceiver::handle_message_seren_flight_mode_change(mavlink_message_t *msg)
+{
+	mavlink_seren_flight_mode_change_t seren_flight_mode_change;
+	mavlink_msg_seren_flight_mode_change_decode(msg, &seren_flight_mode_change);
+
+	seren_flight_mode_change_s flight_mode_change{};
+	flight_mode_change.timestamp = hrt_absolute_time();
+	flight_mode_change.flight_mode = seren_flight_mode_change.flight_mode;
+
+	_seren_flight_mode_change_pub.publish(flight_mode_change);
+}
+
+void MavlinkReceiver::handle_message_seren_hss_coordinates(mavlink_message_t *msg)
+{
+	mavlink_seren_hss_coordinates_t seren_hss_coordinates;
+	mavlink_msg_seren_hss_coordinates_decode(msg, &seren_hss_coordinates);
+
+	seren_hss_coordinates_s hss_coordinates{};
+	hss_coordinates.timestamp = hrt_absolute_time();
+
+	for (int i = 0; i < 20; i++) {
+		hss_coordinates.hss_latitudes[i] = seren_hss_coordinates.hss_latitudes[i];
+		hss_coordinates.hss_longitudes[i] = seren_hss_coordinates.hss_longitudes[i];
+		hss_coordinates.hss_radius[i] = seren_hss_coordinates.hss_radius[i];
+	}
+
+	_seren_hss_coordinates_pub.publish(hss_coordinates);
+}
+
 void MavlinkReceiver::handle_messages_in_gimbal_mode(mavlink_message_t &msg)
 {
 	switch (msg.msgid) {

@@ -58,6 +58,9 @@
 
 #include "streams/TARGET_LOCKING_STATUS.hpp"	// include custom streams
 #include "streams/SEREN_ALTITUDE.hpp"
+#include "streams/SEREN_TELEMETRY.hpp"
+#include "streams/SEREN_KAMIKAZE_INFO.hpp"
+#include "streams/SEREN_LOCK_INFO.hpp"
 
 #include "streams/ACTUATOR_OUTPUT_STATUS.hpp"
 #include "streams/ALTITUDE.hpp"
@@ -257,6 +260,16 @@ static const StreamListItem streams_list[] = {
 #if defined(SEREN_ALTITUDE_HPP)
 	create_stream_list_item<MavlinkStreamSerenAltitude>(),
 #endif // SEREN_ALTITUDE_HPP
+#if defined(SEREN_TELEMETRY_HPP)
+	create_stream_list_item<MavlinkStreamSerenTelemetry>(),
+#endif // SEREN_TELEMETRY_HPP
+#if defined(SEREN_KAMIKAZE_INFO_HPP)
+    	create_stream_list_item<MavlinkStreamSerenKamikazeInfo>(),
+#endif
+#if defined(SEREN_LOCK_INFO_HPP)
+    	create_stream_list_item<MavlinkStreamSerenLockInfo>(),
+#endif
+
 
 #if defined(HEARTBEAT_HPP)
 	create_stream_list_item<MavlinkStreamHeartbeat>(),

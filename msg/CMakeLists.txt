@@ -38,8 +38,13 @@ include(px4_list_make_absolute)
 
 set(msg_files
 	Telemetry.msg ### custom
-
 	TargetLockingStatus.msg
+	SerenTelemetry.msg
+	SerenLockInfo.msg
+	SerenKamikazeInfo.msg
+	SerenTargetTelemetry.msg
+	SerenFlightModeChange.msg
+	SerenHssCoordinates.msg
 
 	ActionRequest.msg
 	ActuatorArmed.msg

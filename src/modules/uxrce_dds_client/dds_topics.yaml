@@ -77,10 +77,28 @@ publications:
   - topic: /fmu/out/target_locking_status
     type: px4_msgs::msg::TargetLockingStatus
 
+  - topic: /fmu/out/seren_target_telemetry
+    type: px4_msgs::msg::SerenTargetTelemetry
+
+  - topic: /fmu/out/seren_flight_mode_change
+    type: px4_msgs::msg::SerenFlightModeChange
+
+  - topic: /fmu/out/seren_hss_coordinates
+    type: px4_msgs::msg::SerenHssCoordinates
+
 # Create uORB::Publication
 subscriptions:
   - topic: /fmu/in/telemetry ## custom  !!!!!!!!!!!!!!!!!!
     type: px4_msgs::msg::Telemetry
+
+  - topic: /fmu/in/seren_telemetry ## custom  !!!!!!!!!!!!!!!!!!
+    type: px4_msgs::msg::SerenTelemetry
+
+  - topic: /fmu/in/seren_lock_info ## custom  !!!!!!!!!!!!!!!!!!
+    type: px4_msgs::msg::SerenLockInfo
+
+  - topic: /fmu/in/seren_kamikaze_info ## custom  !!!!!!!!!!!!!!!!!!
+    type: px4_msgs::msg::SerenKamikazeInfo       
 
   - topic: /fmu/in/register_ext_component_request
     type: px4_msgs::msg::RegisterExtComponentRequest
