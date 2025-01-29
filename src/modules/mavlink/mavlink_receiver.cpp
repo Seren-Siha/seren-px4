@@ -489,8 +489,8 @@ void MavlinkReceiver::handle_message_seren_hss_coordinates(mavlink_message_t *ms
 
 	seren_hss_coordinates_s hss_coordinates{};
 	hss_coordinates.timestamp = hrt_absolute_time();
-
-	for (int i = 0; i < 20; i++) {
+	int size = sizeof(seren_hss_coordinates.hss_latitudes) / sizeof(float);
+	for (int i = 0; i < size; i++) {
 		hss_coordinates.hss_latitudes[i] = seren_hss_coordinates.hss_latitudes[i];
 		hss_coordinates.hss_longitudes[i] = seren_hss_coordinates.hss_longitudes[i];
 		hss_coordinates.hss_radius[i] = seren_hss_coordinates.hss_radius[i];
