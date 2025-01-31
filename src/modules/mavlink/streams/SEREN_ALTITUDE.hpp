@@ -61,6 +61,7 @@ protected:
 		if (_telemetry_sub.update(&telem)) {
 //			std::cout << "Telemetry: " << telem.altitude << std::endl;
 			// mavlink_battery_status_demo_t is the MAVLink message object
+			PX4_INFO("SEREN_ALTITUDE sent: %f", (double)telem.altitude);
 			mavlink_seren_altitude_t telem_msg{};
 
 			telem_msg.altitude = telem.altitude;
